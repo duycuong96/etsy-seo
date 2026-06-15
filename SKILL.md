@@ -1,6 +1,6 @@
 ---
 name: etsy-seo
-description: Pipeline 4 bước viết Title + 13 Tags + Description chuẩn SEO Etsy cho design POD. Bước 1 nghiên cứu design (insight ngắn cho SEO), Bước 2 keyword research bằng mcp__trends-ytuong, Bước 3 viết Title/Tags/Description theo Etsy 2026 best practices, Bước 4 lưu file `SEO Etsy/reports/`. Trigger: "/etsy-seo", "viết SEO Etsy", "title tag description Etsy", hoặc khi user gửi ảnh design / report analyze-design + nhờ viết SEO listing.
+description: Pipeline 4 bước viết Title + 13 Tags + Description chuẩn SEO Etsy cho design POD. Bước 1 nghiên cứu design (insight ngắn cho SEO), Bước 2 keyword research bằng mcp__trends-ytuong, Bước 3 viết Title/Tags/Description theo Etsy 2026 best practices, Bước 4 lưu file `~/Etsy-SEO/reports/`. Trigger: "/etsy-seo", "viết SEO Etsy", "title tag description Etsy", hoặc khi user gửi ảnh design / report analyze-design + nhờ viết SEO listing.
 metadata:
   type: skill
   scope: project
@@ -11,10 +11,15 @@ metadata:
 Skill viết **Title + 13 Tags + Description** chuẩn SEO Etsy cho design POD (t-shirt, hoodie, sticker, poster, mug, tote). Pipeline yêu cầu **nghiên cứu design trước**, sau đó **research keyword bằng tool data thật**, mới viết SEO.
 
 > ⚠️ **Đầu vào bắt buộc:** Một trong hai:
-> - **Ảnh design** (jpg/png/webp), HOẶC
-> - **File report `.md` từ skill `[[analyze-design]]`** trong `/Users/quannguyen/Downloads/Claude-DC/Analyze Design/reports/`
+> - **Ảnh design** (jpg/png/webp) — kéo thả vào chat, HOẶC
+> - **File report `.md` từ skill `[[analyze-design]]`** (nếu có cài) — paste đường dẫn file.
 >
-> Nếu user chưa gửi → hỏi: *"Bạn gửi ảnh design hoặc đường dẫn file report analyze-design giúp mình. Không bịa nội dung khi chưa có design thật."*
+> Nếu user chưa gửi → hỏi: *"Bạn gửi ảnh design (kéo thả vào đây) hoặc đường dẫn file report analyze-design giúp mình. Không bịa nội dung khi chưa có design thật."*
+>
+> 📁 **Đường dẫn portable (chạy được trên mọi máy Windows/Mac):**
+> - Report lưu tại: `~/Etsy-SEO/reports/` (Windows: `C:\Users\<tên-bạn>\Etsy-SEO\reports\`)
+> - Template + RULES nằm cùng skill: `~/.claude/skills/etsy-seo/`
+> - `~` = thư mục home của user; Read/Write tự resolve trên cả Windows lẫn Mac.
 
 ---
 
@@ -38,7 +43,7 @@ Skill viết **Title + 13 Tags + Description** chuẩn SEO Etsy cho design POD (
 2. **Product type chính** (optional): tee / hoodie / sticker / poster / mug / tote. Mặc định: t-shirt nếu không nói khác.
 3. **Niche / persona đã biết trước** (optional): nếu user xác nhận trước thì keyword research focus hơn. Mặc định: tự suy luận từ design.
 4. **Có chạy keyword research với `mcp__trends-ytuong` không?** Mặc định **CÓ**. Nếu user nói "skip keyword tool" → dùng best judgement và ghi rõ caveat trong report.
-5. **Lưu report ra file?** Mặc định **CÓ**, lưu vào `/Users/quannguyen/Downloads/Claude-DC/SEO Etsy/reports/YYYY-MM-DD_<design-slug>.md`. Nếu "chỉ inline" → trả thẳng chat, không tạo file.
+5. **Lưu report ra file?** Mặc định **CÓ**, lưu vào `~/Etsy-SEO/reports/YYYY-MM-DD_<design-slug>.md` (Windows: `C:\Users\<tên>\Etsy-SEO\reports\`). Nếu "chỉ inline" → trả thẳng chat, không tạo file.
 
 ---
 
@@ -194,9 +199,9 @@ This Cowgirl Mama Western Shirt is for the rural mom who raised her babies on di
 
 **4.1 — Lưu file:**
 
-- **Path:** `/Users/quannguyen/Downloads/Claude-DC/SEO Etsy/reports/YYYY-MM-DD_<design-slug>.md`
+- **Path:** `~/Etsy-SEO/reports/YYYY-MM-DD_<design-slug>.md` (Windows: `C:\Users\<tên>\Etsy-SEO\reports\YYYY-MM-DD_<design-slug>.md`). Nếu thư mục chưa tồn tại → tạo mới.
 - **Slug:** kebab-case từ Bước 1 (vd: `cowgirl-sunset-mama`). Nếu input là report analyze-design → dùng cùng slug để pair 2 file.
-- **Format:** theo template `SEO Etsy/templates/seo_report_template.md`.
+- **Format:** theo template `~/.claude/skills/etsy-seo/templates/seo_report_template.md`.
 
 **4.2 — In inline trong chat (block dễ copy):**
 
@@ -212,7 +217,7 @@ This Cowgirl Mama Western Shirt is for the rural mom who raised her babies on di
 **Description Hook** (160 chars đầu):
 > This Cowgirl Mama Western Shirt is for the rural mom who raised her babies on dirt roads, wildflowers, and Sunday faith. Retro country mom tee...
 
-📄 Full report: [YYYY-MM-DD_cowgirl-sunset-mama.md](SEO Etsy/reports/YYYY-MM-DD_cowgirl-sunset-mama.md)
+📄 Full report: `~/Etsy-SEO/reports/YYYY-MM-DD_cowgirl-sunset-mama.md`
 ```
 
 Nếu user nói "chỉ inline, không lưu file" → in full report trong chat, không tạo file.

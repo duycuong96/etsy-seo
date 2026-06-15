@@ -6,3 +6,7 @@
 node_modules/
 __pycache__/
 *.pyc
+
+# Report SEO la output rieng cua tung seller - khong day len repo
+reports/*
+!reports/.gitkeep

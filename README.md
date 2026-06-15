@@ -1,47 +1,101 @@
-# SEO Etsy — Workspace
+# Etsy SEO Skill — Viết Title + 13 Tags + Description chuẩn SEO Etsy
 
-Folder lưu output của skill `etsy-seo` — viết Title + 13 Tags + Description chuẩn SEO Etsy cho design POD.
+Công cụ giúp seller POD viết **listing Etsy chuẩn SEO** (Title 140 ký tự, 13 tags, description tối ưu) chỉ bằng cách **kéo thả ảnh design** vào Claude. Tự động nghiên cứu keyword bằng dữ liệu thật rồi xuất nội dung copy-paste thẳng lên Etsy.
 
-## Cấu trúc
+---
 
+## 🚀 Cài đặt (Windows) — 3 bước
+
+### Bước 1 — Tải về từ Git
+Cách A (có sẵn Git): mở **Command Prompt** / **PowerShell**, chạy:
 ```
-SEO Etsy/
-├── README.md                          ← file này
-├── reports/                           ← 1 design = 1 file SEO report
-│   └── YYYY-MM-DD_<design-slug>.md
-└── templates/
-    └── seo_report_template.md         ← template chuẩn
-```
-
-## Pipeline 4 bước (skill `etsy-seo`)
-
-1. **Bước 1 — Design Insight Snapshot:** trích 7 trường (Subject, Theme, Persona, Occasion, Hook, Insider keywords, Product fit). Đọc từ ảnh HOẶC từ report `analyze-design`.
-2. **Bước 2 — Keyword Research:** gọi `mcp__trends-ytuong` (research_keyword, find_trending, explore_niche, find_hidden_gems, get_keyword_rank). Xuất bảng 15-20 candidate.
-3. **Bước 3 — Viết SEO:**
-   - **Title** ≤140 chars, frontload 40 chars đầu, phân tách bằng comma.
-   - **13 Tags**, mỗi ≤20 chars, mix 3 broad + 5 niche + 3 long-tail + 2 seasonal.
-   - **Description** với 160 chars đầu = meta, đủ 5 block (hook / features / gift / care / CTA).
-4. **Bước 4 — Lưu file + In inline block** dễ copy vào Etsy.
-
-## Pair với `analyze-design`
-
-Nếu design đã có report `analyze-design` → skill `etsy-seo` đọc lại report, dùng cùng slug để pair 2 file:
-
-```
-Analyze Design/reports/2026-05-21_cowgirl-sunset-mama.md   ← full analysis
-SEO Etsy/reports/2026-05-21_cowgirl-sunset-mama.md         ← SEO listing
+git clone https://github.com/duycuong96/etsy-seo.git
+cd etsy-seo
 ```
 
-## Cách dùng
+Cách B (không có Git): vào https://github.com/duycuong96/etsy-seo → nút **Code** → **Download ZIP** → giải nén ra một thư mục.
 
-- Gõ `/etsy-seo` trong Claude Code, gửi ảnh design HOẶC paste path report analyze-design.
-- Hoặc nói tự nhiên: "viết SEO Etsy cho design này" + gửi ảnh.
+### Bước 2 — Chạy trình cài tự động
+**Double-click file `install.bat`** trong thư mục vừa tải.
 
-## Etsy SEO rules (quick reference)
+Script sẽ tự động:
+- ✅ Kiểm tra & cài **Node.js** (nếu thiếu)
+- ✅ Cài **Claude Code** (CLI chạy skill)
+- ✅ Cài **skill etsy-seo** vào máy
+- ✅ Kết nối **công cụ nghiên cứu keyword** (MCP trends-ytuong)
+- ✅ Tạo thư mục lưu kết quả: `C:\Users\<tên-bạn>\Etsy-SEO\reports`
+
+> Nếu lần đầu máy chưa có Node.js, script sẽ cài Node rồi báo bạn **đóng cửa sổ, mở lại và chạy `install.bat` thêm 1 lần nữa**. Đây là bước bình thường.
+
+### Bước 3 — Đăng nhập & dùng
+1. Mở **một cửa sổ terminal mới**, gõ: `claude`
+2. Lần đầu sẽ yêu cầu **đăng nhập tài khoản Claude** — làm theo hướng dẫn trên màn hình.
+3. Khi đã vào, gõ `/etsy-seo` rồi **kéo thả ảnh design** vào. Xong!
+
+---
+
+## 🍎 Cài đặt (macOS / Linux)
+```
+git clone https://github.com/duycuong96/etsy-seo.git
+cd etsy-seo
+bash install.sh
+```
+
+---
+
+## 💡 Cách dùng hàng ngày
+
+Trong cửa sổ `claude`:
+- Gõ `/etsy-seo` rồi **kéo thả ảnh design** vào, HOẶC
+- Nói tự nhiên: *"viết SEO Etsy cho design này"* + gửi ảnh.
+
+Skill sẽ chạy **pipeline 4 bước** và trả về sẵn để copy lên Etsy:
+
+1. **Phân tích design** — chủ thể, niche, persona, dịp, insider keywords.
+2. **Nghiên cứu keyword** — dùng tool dữ liệu thật, xuất bảng 15–20 keyword (volume + competition).
+3. **Viết listing:**
+   - **Title** ≤140 ký tự, frontload keyword chính vào 40 ký tự đầu.
+   - **13 Tags**, mỗi tag ≤20 ký tự (3 broad + 5 niche + 3 long-tail + 2 seasonal).
+   - **Description** 5 block (hook / features / gift / care / CTA), 160 ký tự đầu chuẩn meta.
+4. **Lưu file + in block dễ copy** (Title / 13 tags 1 dòng / hook) ra chat.
+
+Kết quả lưu tại: `C:\Users\<tên-bạn>\Etsy-SEO\reports\` (Mac: `~/Etsy-SEO/reports/`).
+
+---
+
+## 📋 Bảng SEO Etsy nhanh (xem chi tiết trong `RULES.md`)
 
 | Field | Hard limit | Best practice |
 |-------|-----------|---------------|
-| Title | 140 chars | Frontload 40 chars đầu, phân tách `,`, không nhồi keyword |
-| Tags | 13 tags × 20 chars | Long-tail > single word, không trùng từ y hệt |
-| Description hook | 160 chars đầu | Primary keyword + emotional hook + product type |
-| Description total | 300-500 từ | 5 block: hook / features / gift / care / CTA |
+| Title | 140 ký tự | Frontload 40 ký tự đầu, phân tách bằng `,`, không nhồi keyword |
+| Tags | 13 tags × 20 ký tự | Long-tail > từ đơn, không trùng từ y hệt |
+| Description (đầu) | 160 ký tự = meta | Primary keyword + emotional hook + product type |
+| Description (total) | 300–500 từ | 5 block: hook / features / gift / care / CTA |
+
+---
+
+## 📂 Cấu trúc thư mục
+
+```
+etsy-seo/                       ← repo tải từ Git
+├── install.bat                 ← Windows: double-click để cài
+├── install.ps1                 ← script cài Windows (PowerShell)
+├── install.sh                  ← macOS / Linux: bash install.sh
+├── SKILL.md                    ← định nghĩa skill (pipeline 4 bước)
+├── RULES.md                    ← quy tắc viết Title/Tags/Description đầy đủ
+├── README.md                   ← file này
+└── templates/
+    └── seo_report_template.md  ← template report
+```
+
+---
+
+## ❓ Gặp lỗi thường gặp
+
+| Triệu chứng | Cách xử lý |
+|-------------|-----------|
+| `'claude' is not recognized` | Đóng terminal, **mở cửa sổ mới** rồi gõ lại `claude`. |
+| Script báo cài Node.js xong | **Đóng – mở lại** terminal, chạy `install.bat` thêm 1 lần. |
+| Cài Claude Code lỗi quyền | Mở PowerShell bằng **Run as Administrator** rồi chạy lại. |
+| `/etsy-seo` không hiện | Kiểm tra skill đã copy vào `%USERPROFILE%\.claude\skills\etsy-seo`; chạy lại `install.bat`. |
+| Keyword research không có data | Trong `claude` gõ: `claude mcp add --scope user --transport sse trends-ytuong https://mcp.trends.ytuong.ai/sse` |

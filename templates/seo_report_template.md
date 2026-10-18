@@ -46,6 +46,30 @@
 - **2 Seasonal / Gift:** {{...}}
 - **Backup:** {{...}}
 
+### 🎯 Long-tail (5-6 từ, ≤6 từ)
+
+| Loại | Long-tail | Số từ | Chars | Nguồn |
+|------|-----------|-------|-------|-------|
+| CHÍNH | {{long-tail chính}} | {{5-6}} | {{≤40}} | {{...}} |
+| Phụ 1 | {{...}} | {{...}} | {{...}} | {{...}} |
+| Phụ 2 | {{...}} | {{...}} | {{...}} | {{...}} |
+
+---
+
+## Bước 2B — Support Tags (topbubbleindex)
+
+- Long-tail chính: {{https://www.topbubbleindex.com/etsy/etsy-tag-generator?keyword=...}} — {{N}} tag
+- Long-tail phụ 1: {{link}} — {{N}} tag
+- Long-tail phụ 2: {{link}} — {{N}} tag
+
+| # | Tag | Chars | Tần suất (chính / phụ1 / phụ2) | Từ long-tail được hỗ trợ | Verdict |
+|---|-----|-------|------------------------------|--------------------------|---------|
+| 1 | {{tag}} | {{X}} | {{n / n / n}} | {{...}} | {{✅ Tag / 🟡 Backup}} |
+
+**Tag bị loại:** {{tag (L1 TM) · tag (L2 png) · tag (L3 lệch persona) · ...}}
+
+**Coverage:** {{từ gốc}} → {{số tag chứa}} · ... (mỗi từ ≥2 tag ✅)
+
 ---
 
 ## Bước 3 — Title + Tags + Description
@@ -57,7 +81,7 @@
 ```
 
 **Frontload analysis:**
-- 40 chars đầu: `{{first 40 chars}}` — chứa keyword chính `{{primary keyword}}` ✅
+- 40 chars đầu: `{{first 40 chars}}` — mở đầu bằng Long-tail CHÍNH `{{long-tail chính}}` ✅
 - Phân tách: comma `,`
 - Cấu trúc: `[Primary + Product]`, `[Secondary + Style]`, `[Persona/Niche]`, `[Occasion/Gift]`, `[Optional]`
 

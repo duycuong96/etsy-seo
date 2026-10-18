@@ -148,6 +148,11 @@ Processing time: X–Y business days. Ships from [location].
 - Không liên quan trực tiếp đến design/niche
 - Lặp chính xác từ đã có trong tag khác
 
+### Long-tail CHÍNH — quan trọng nhất
+- **5-6 từ là chuẩn**, 4 từ chấp nhận, **không quá 6 từ**. Cấu trúc `[Style] + [Subject] + [Persona] + [Product type]`.
+- Title mở đầu bằng long-tail chính nguyên văn; mỗi từ gốc của nó xuất hiện trong ≥2 tag.
+- Search long-tail trên `topbubbleindex.com/etsy/etsy-tag-generator?keyword=...` → lọc tag: bỏ >20 chars / TM / sai loại sản phẩm (png, svg, sublimation khi bán áo) / lệch persona → chỉ giữ tag chứa từ của long-tail hoặc insider keyword. Số tần suất ≥5 = tốt, ≥10 = mạnh.
+
 ### Seasonal timing — quan trọng
 > Seasonal tags có window ngắn. Rule: **list trước dịp lễ tối thiểu 3–4 tuần** để Etsy index kịp.
 > Ví dụ: 4th of July = list trước 20/6. Mother's Day = list trước 1/5.

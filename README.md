@@ -52,7 +52,7 @@ Trong cửa sổ `claude`:
 Skill sẽ chạy **pipeline 4 bước** và trả về sẵn để copy lên Etsy:
 
 1. **Phân tích design** — chủ thể, niche, persona, dịp, insider keywords.
-2. **Nghiên cứu keyword** — dùng tool dữ liệu thật, xuất bảng 15–20 keyword (volume + competition).
+2. **Nghiên cứu keyword** — dùng tool dữ liệu thật (trends-ytuong; thêm EverBee nếu bạn có), xuất bảng 15–20 keyword (volume + competition).
 3. **Viết listing:**
    - **Title** ≤140 ký tự, frontload keyword chính vào 40 ký tự đầu.
    - **13 Tags**, mỗi tag ≤20 ký tự (3 broad + 5 niche + 3 long-tail + 2 seasonal).
@@ -60,6 +60,15 @@ Skill sẽ chạy **pipeline 4 bước** và trả về sẵn để copy lên Et
 4. **Lưu file + in block dễ copy** (Title / 13 tags 1 dòng / hook) ra chat.
 
 Kết quả lưu tại: `C:\Users\<tên-bạn>\Etsy-SEO\reports\` (Mac: `~/Etsy-SEO/reports/`).
+
+---
+
+## 🐝 (Tuỳ chọn) Bật EverBee để có số liệu sâu hơn
+
+Không có EverBee skill **vẫn chạy đủ** bằng trends-ytuong + topbubbleindex. Nếu có tài khoản EverBee, bật thêm để có volume/tháng chính xác, số listing cạnh tranh, doanh số ước tính và tag của listing bán chạy:
+
+1. Vào **claude.ai → Settings → Connectors** → thêm **EverBee** → đăng nhập tài khoản EverBee.
+2. Mở lại `claude`. Skill tự nhận EverBee và chạy thêm Bước 2A; không cần cấu hình gì khác.
 
 ---
 

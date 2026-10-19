@@ -1,6 +1,6 @@
 ---
 name: etsy-seo
-description: Pipeline 4 bước viết Title + 13 Tags + Description chuẩn SEO Etsy cho design POD. Bước 1 nghiên cứu design (insight ngắn cho SEO), Bước 2 keyword research bằng mcp__trends-ytuong + chốt LONG-TAIL CHÍNH 5-6 từ (quan trọng nhất) rồi search long-tail trên topbubbleindex Etsy Tag Generator để lọc tag hỗ trợ, Bước 3 viết Title/Tags/Description theo Etsy 2026 best practices, Bước 4 lưu file `~/Etsy-SEO/reports/`. Trigger: "/etsy-seo", "viết SEO Etsy", "title tag description Etsy", hoặc khi user gửi ảnh design / report analyze-design + nhờ viết SEO listing.
+description: Pipeline 4 bước viết Title + 13 Tags + Description chuẩn SEO Etsy cho design POD. Bước 1 nghiên cứu design (insight ngắn cho SEO), Bước 2 keyword research bằng mcp__trends-ytuong + EverBee MCP tuỳ chọn nếu có kết nối (volume/competition/keyword score, top listing đối thủ + tag của họ) + chốt LONG-TAIL CHÍNH 5-6 từ (quan trọng nhất) rồi search long-tail trên topbubbleindex Etsy Tag Generator để lọc tag hỗ trợ, Bước 3 viết Title/Tags/Description theo Etsy 2026 best practices, Bước 4 lưu file `~/Etsy-SEO/reports/`. Trigger: "/etsy-seo", "viết SEO Etsy", "title tag description Etsy", hoặc khi user gửi ảnh design / report analyze-design + nhờ viết SEO listing.
 metadata:
   type: skill
   scope: project
@@ -42,7 +42,7 @@ Skill viết **Title + 13 Tags + Description** chuẩn SEO Etsy cho design POD (
 1. **Design source** (bắt buộc): Ảnh PNG/JPG, HOẶC path file `.md` analyze-design report.
 2. **Product type chính** (optional): tee / hoodie / sticker / poster / mug / tote. Mặc định: t-shirt nếu không nói khác.
 3. **Niche / persona đã biết trước** (optional): nếu user xác nhận trước thì keyword research focus hơn. Mặc định: tự suy luận từ design.
-4. **Có chạy keyword research với `mcp__trends-ytuong` không?** Mặc định **CÓ**. Nếu user nói "skip keyword tool" → dùng best judgement và ghi rõ caveat trong report.
+4. **Có chạy keyword research không?** Mặc định **CÓ**: `mcp__trends-ytuong` là nguồn chính. **EverBee là TUỲ CHỌN** — chỉ chạy Bước 2A + phần EverBee của 2.5 khi máy có kết nối EverBee MCP (kiểm tra như đầu Bước 2A). Không có EverBee → pipeline vẫn chạy đủ bằng ytrends + topbubbleindex, KHÔNG hỏi lại user. Nếu ytrends lỗi mà có EverBee → dùng EverBee làm nguồn chính, ghi caveat. Nếu user nói "skip keyword tool" → dùng best judgement và ghi rõ caveat trong report.
 5. **Có search long-tail trên topbubbleindex không?** Mặc định **CÓ** (Bước 2B, cần Chrome extension Claude in Chrome đã kết nối). Nếu không có Chrome → dùng fallback trong Bước 2B.
 6. **Lưu report ra file?** Mặc định **CÓ**, lưu vào `~/Etsy-SEO/reports/YYYY-MM-DD_<design-slug>.md` (Windows: `C:\Users\<tên>\Etsy-SEO\reports\`). Nếu "chỉ inline" → trả thẳng chat, không tạo file.
 
@@ -77,11 +77,11 @@ Mục tiêu: trích ra **đủ thông tin để chọn đúng keyword**, KHÔNG 
 
 ---
 
-### Bước 2 — Keyword Research với `mcp__trends-ytuong`
+### Bước 2 — Keyword Research với `mcp__trends-ytuong` + EverBee
 
-> ⚙️ Mặc định **BẮT BUỘC** dùng tool data thật. Nếu user yêu cầu skip → bỏ qua Bước 2, ghi caveat trong report: *"⚠️ Skipped keyword research — title/tags dựa trên best judgement, recommend cross-check bằng eRank/Marmalead trước khi launch."*
+> ⚙️ Mặc định **BẮT BUỘC** dùng tool data thật: **ytrends** (nguồn chính, trend/momentum/volume band) + **EverBee nếu có** (volume số tuyệt đối, competition, doanh số đối thủ). Thiếu EverBee → bỏ Bước 2A, ghi 1 dòng note *"ℹ️ Không dùng EverBee (chưa kết nối) — volume theo band ytrends"* (không phải lỗi). ytrends lỗi → chạy EverBee nếu có, ghi caveat *"⚠️ ytrends không kết nối — keyword data chỉ từ EverBee"*. Cả hai đều không có → judgement + topbubbleindex, ghi caveat. Nếu user yêu cầu skip → bỏ qua Bước 2, ghi caveat trong report: *"⚠️ Skipped keyword research — title/tags dựa trên best judgement, recommend cross-check bằng EverBee/eRank trước khi launch."*
 
-**2.1 — Gọi tool theo thứ tự:**
+**2.1 — Gọi tool ytrends theo thứ tự:**
 
 1. **`ytrends_research_keyword`** — input là 2-3 keyword cốt lõi rút từ Bước 1 (vd: "cowgirl mom shirt", "western mama tee"). Lấy: search volume, competition score, related keywords.
 
@@ -93,15 +93,58 @@ Mục tiêu: trích ra **đủ thông tin để chọn đúng keyword**, KHÔNG 
 
 5. **`ytrends_get_keyword_rank`** (optional, nếu cần verify) — check 3-5 candidate keyword cuối có thực sự có volume + competition phù hợp không.
 
-**2.2 — Xuất bảng keyword candidates (15-20 keyword):**
+---
 
-| # | Keyword | Search vol | Competition | Loại | Verdict |
-|---|---------|-----------|-------------|------|---------|
-| 1 | cowgirl mom shirt | high | medium | primary | ✅ Title + Tag |
-| 2 | western mama tee | medium | low | primary | ✅ Title + Tag |
-| 3 | wildflower country mom | low | very low | long-tail | ✅ Tag |
-| 4 | mothers day cowgirl gift | medium | medium | seasonal | ✅ Title + Tag |
-| ... | ... | ... | ... | ... | ... |
+#### Bước 2A — Phân tích bằng EverBee (TUỲ CHỌN — chỉ khi có EverBee MCP)
+
+> 🔌 **Kiểm tra có EverBee không:** tìm tool có tên kết thúc bằng `view_keyword` / `validate_product_idea` của server "EverBee Research" (tên server mỗi máy khác nhau). Tool bị deferred → `ToolSearch` query `everbee view_keyword`. Không thấy tool, hoặc gọi lỗi auth/kết nối → **bỏ qua toàn bộ Bước 2A**, để trống các cột EB (`–`), đi tiếp 2.2. Seller muốn bật: claude.ai → Settings → Connectors → thêm **EverBee** (cần tài khoản EverBee).
+>
+> 🐝 EverBee cho **số volume/tháng thật, competition (số listing cạnh tranh), Keyword Score**, và **doanh số ước tính của listing đối thủ** — bổ sung cho ytrends (trend/momentum).
+>
+> 📊 Các tool `view_*` render bảng EverBee ngay trong chat → **không chép lại nguyên bảng**, chỉ trích số cần dùng vào bảng 2.2 / 2B.3 của report.
+
+**2A.1 — Keyword metrics:**
+
+1. **`view_keyword`** — `keyword` = 2-3 seed cốt lõi từ Bước 1 (gọi từng seed, vd `cowgirl mom shirt`), `params` = `{order_by: "new_volume", order_direction: "desc", per_page: 20}`. Lấy: **Volume** (search/tháng), **Competition** (số listing), **Keyword Score**.
+2. **`view_keywords`** — `params.keyword_include` = từ niche chính (vd `cowgirl`), `order_by` = `score`, `order_direction` = `desc`, `per_page` = 30. Lọc thêm `competition_max` nếu niche quá đông. Mục đích: tìm long-tail **volume khá + competition thấp** mà ytrends bỏ sót.
+
+**2A.2 — Listing đối thủ + tag của họ:**
+
+3. **`view_listings`** — `params.title_include` = cụm lõi niche (2-3 từ, vd `cowgirl mama`), `listing_type` = `physical` (hoặc `download` nếu bán file số), `order_by` = `est_mo_sales`, `order_direction` = `desc`, `est_mo_sales_min` = 1, `per_page` = 15. **Không truyền `columns`** (để giữ `listing_id` trong kết quả). Ghi lại: top 3-5 listing bán chạy (Mo. Sales, giá, conversion, listing age) + **cấu trúc title của họ** (frontload cụm gì).
+4. **`view_listing_tags`** — `listing_id` lấy từ row của bước 3 (hoặc tách từ `title_href`: `etsy.com/listing/<id>/...`), cho **2-3 listing top** (ưu tiên listing bán tốt mà **listing age thấp** = tag đang hiệu quả, không phải nhờ lịch sử). Lấy tag + volume/competition/score → đưa vào nguồn support tag ở Bước 2B.
+   > ⚠️ Mỗi lần gọi tốn tối đa 13 request keyword → chỉ gọi 2-3 listing, không gọi hàng loạt.
+   > 🚫 **Bỏ qua listing top có title dính TM/IP** (Disney, nhân vật, Comfort Colors, team thể thao...) — số bán của họ không phải nhờ SEO, tag dễ kéo theo TM. Chọn listing sạch IP để học.
+
+> 🧯 **Bẫy EverBee đã gặp (test 2026-10-19):**
+> - **Luôn truyền `order_direction: "desc"`** — bỏ trống thì thực tế sort TĂNG dần → toàn listing 0 sale lên đầu.
+> - Truyền `columns` → row **mất `listing_id`** → không gọi được `view_listing_tags`. Cần cột cụ thể thì vẫn lấy id từ `title_href`.
+> - `Sales` (`est_mo_sales`) là TỔNG theo `time_range` (mặc định last_1_month); số/tháng chuẩn = `Mo. Sales` (`cached_est_mo_sales`).
+> - `title_include` khớp chuỗi con → kết quả lẫn persona/dịp khác (vd "1st rodeo birthday" khi search `cowgirl mama`) — đọc lướt, chỉ lấy listing đúng persona Bước 1.
+
+**Đọc chỉ số EverBee:**
+
+| Chỉ số | Cách dùng |
+|--------|-----------|
+| **Volume** | Volume cao → ứng viên primary/title. Volume = 0 hoặc trống → ghi `no data`, không tự đoán |
+| **Competition** | Số listing cạnh tranh. Volume/Competition càng cao càng dễ rank. Competition rất cao (vd >50k) + volume không vượt trội → chỉ dùng nếu là primary của niche |
+| **Keyword Score** | Điểm tổng hợp EverBee — ưu tiên score cao khi chọn giữa 2 keyword tương đương |
+| **Mo. Sales / Conversion của listing** | Xác nhận cụm keyword đó **có người mua thật**, không chỉ có người search |
+
+---
+
+**2.2 — Xuất bảng keyword candidates (15-20 keyword, gộp ytrends + EverBee):**
+
+| # | Keyword | Search vol (ytrends) | EB Volume | EB Competition | EB Score | Loại | Verdict |
+|---|---------|---------------------|-----------|----------------|----------|------|---------|
+| 1 | cowgirl mom shirt | high | 2,400 | 18,500 | 62 | primary | ✅ Title + Tag |
+| 2 | western mama tee | medium | 880 | 3,100 | 71 | primary | ✅ Title + Tag |
+| 3 | wildflower country mom | low | 90 | 420 | 58 | long-tail | ✅ Tag |
+| 4 | mothers day cowgirl gift | medium | – | – | – | seasonal | ✅ Title + Tag |
+| ... | ... | ... | ... | ... | ... | ... | ... |
+
+(Số trong ví dụ chỉ minh hoạ format — luôn ghi số thật từ tool, `–` khi tool không trả.)
+
+Khi 2 nguồn **lệch nhau** (ytrends nói high, EverBee volume thấp) → ưu tiên EverBee cho volume tuyệt đối, ytrends cho xu hướng/momentum; ghi chú ngắn trong cột Verdict.
 
 **2.3 — Phân loại final:**
 - **3 primary** (high-medium volume, sẽ vào title đầu)
@@ -133,9 +176,25 @@ Chốt:
 
 | Loại | Long-tail | Số từ | Chars | Nguồn |
 |------|-----------|-------|-------|-------|
-| CHÍNH | retro cowgirl mama western shirt | 5 | 32 | ytrends + insider kw |
+| CHÍNH | retro cowgirl mama western shirt | 5 | 32 | ytrends + EverBee + insider kw |
 | Phụ 1 | ... | ... | ... | ... |
 | Phụ 2 | ... | ... | ... | ... |
+
+**2.5 — Verify Long-tail CHÍNH (bắt buộc — EverBee nếu có, không thì ytrends):**
+
+> **Không có EverBee:** dùng `ytrends_get_keyword_rank` (hoặc `ytrends_research_keyword`) cho Long-tail CHÍNH → lấy volume/competition band, map vào bảng quyết định bên dưới ("listing đang bán" thay bằng: topbubbleindex Bước 2B trả `total > 0` = đã có listing top dùng cụm này). Có EverBee → làm 2 bước sau:
+
+1. **`validate_product_idea`** — `product_idea` = Long-tail CHÍNH. Lấy demand band (monthly searches) + competition band (competing listings) + verdict. Ghi kèm `meta.caveats` (đây là read thô, không phải điểm cuối).
+2. **`view_listings`** — `params.title_include` = Long-tail CHÍNH bỏ product type (vd `cowgirl mama western`), `order_by` = `est_mo_sales`, `order_direction` = `desc`, `per_page` = 10 → có listing bán được với cụm này chưa?
+
+| Kết quả | Hành động |
+|---------|-----------|
+| Demand ≥ medium, competition low/medium | ✅ Giữ Long-tail CHÍNH |
+| Demand low **nhưng** có listing title chứa cụm này đang bán (Mo. Sales > 0) | ✅ Giữ — niche nhỏ nhưng có người mua |
+| Demand low + không listing nào bán | 🔄 Đổi sang Long-tail PHỤ tốt hơn, hoặc thay 1 modifier bằng từ có EB Volume cao hơn, verify lại |
+| Competition high + demand chỉ medium | 🟡 Giữ nhưng thêm modifier hẹp hơn (style/persona) để né cạnh tranh |
+
+Ghi vào report: band demand/competition + số listing đang bán + quyết định.
 
 ---
 
@@ -173,7 +232,9 @@ document.querySelectorAll('.badgeTagEtsy').forEach(b => {
 4. Nếu tab bị đóng/điều hướng bất thường (popup quảng cáo) → gọi lại `tabs_context_mcp`, mở tab mới, navigate lại URL. Không dùng JS bấm nút Search.
 5. Xong thì đóng tab (`tabs_close_mcp`).
 
-**Fallback khi không có Chrome:** đưa user 3 link `?keyword=...` để tự mở → user bấm **Copy** và dán danh sách tag vào chat (không có số tần suất → xếp theo thứ tự tool trả về). Nếu user skip → ghi caveat *"⚠️ Chưa verify tag bằng topbubbleindex"*.
+**Fallback khi không có Chrome:** đưa user 3 link `?keyword=...` để tự mở → user bấm **Copy** và dán danh sách tag vào chat (không có số tần suất → xếp theo thứ tự tool trả về). Nếu user skip → ghi caveat *"⚠️ Chưa verify tag bằng topbubbleindex"* và dùng **tag EverBee (2A.2) làm nguồn support tag chính** nếu có EverBee; không có → tag từ `ytrends_explore_niche` / `find_hidden_gems`, ghi caveat.
+
+**Nguồn tag thứ 2 — EverBee (chỉ khi đã chạy 2A.2 `view_listing_tags`):** gộp tag của 2-3 listing top vào cùng danh sách ứng viên, chạy chung 4 lớp lọc 2B.2. Tag xuất hiện ở **cả topbubbleindex lẫn listing top EverBee** → ưu tiên cao nhất. Tag EverBee có Volume + Competition → dùng để phân xử khi 2 tag có tần suất TBI ngang nhau (chọn tag EB Volume cao hơn / Competition thấp hơn).
 
 **2B.2 — Lọc tag (4 lớp, theo thứ tự)**
 
@@ -188,11 +249,11 @@ document.querySelectorAll('.badgeTagEtsy').forEach(b => {
 
 **2B.3 — Output: bảng Support Tags (15-20 tag sau lọc)**
 
-| # | Tag | Chars | Tần suất (chính / phụ1 / phụ2) | Từ long-tail được hỗ trợ | Verdict |
-|---|-----|-------|------------------------------|--------------------------|---------|
-| 1 | western mama | 12 | 6 / 9 / – | western, mama | ✅ Tag |
-| 2 | retro cowgirl | 13 | 10 / – / 4 | retro, cowgirl | ✅ Tag |
-| ... | ... | ... | ... | ... | ... |
+| # | Tag | Chars | Tần suất TBI (chính / phụ1 / phụ2) | EverBee (Vol / Comp / có ở listing top?) | Từ long-tail được hỗ trợ | Verdict |
+|---|-----|-------|------------------------------|------------------------------------------|--------------------------|---------|
+| 1 | western mama | 12 | 6 / 9 / – | 320 / 2,100 / ✅ | western, mama | ✅ Tag |
+| 2 | retro cowgirl | 13 | 10 / – / 4 | – / – / ❌ | retro, cowgirl | ✅ Tag |
+| ... | ... | ... | ... | ... | ... | ... |
 
 Kèm 1 dòng **"Tag bị loại"** liệt kê nhanh tag top-tần-suất đã loại + lý do (L1/L2/L3/L4) để seller thấy logic.
 
@@ -208,7 +269,7 @@ Kèm 1 dòng **"Tag bị loại"** liệt kê nhanh tag top-tần-suất đã lo
 
 **Rules (Etsy 2025-2026 algorithm):**
 
-1. **Title MỞ ĐẦU bằng Long-tail CHÍNH (Bước 2.4) nguyên văn** — đây là frontload 40 ký tự đầu (Etsy search ưu tiên 40 char đầu trong title rank). Các cụm sau dùng Long-tail PHỤ + support tag tần suất cao từ Bước 2B.
+1. **Title MỞ ĐẦU bằng Long-tail CHÍNH (Bước 2.4, đã verify 2.5) nguyên văn** — đây là frontload 40 ký tự đầu (Etsy search ưu tiên 40 char đầu trong title rank). Các cụm sau dùng Long-tail PHỤ + support tag tần suất cao từ Bước 2B + keyword EB Volume cao nhất chưa có trong title. Tham khảo cấu trúc title của listing top EverBee (2A.2) nhưng **không copy nguyên văn**.
 2. **Phân tách bằng dấu `,` (comma)** — 2025-2026 best practice. KHÔNG dùng `|`, `-`, hoặc viết liền thành câu dài.
 3. **Cấu trúc 5 phần:**
    - `[Long-tail CHÍNH 5-6 từ]`, `[Long-tail PHỤ / Secondary Phrase + Style]`, `[Tertiary Phrase + Persona/Niche]`, `[Occasion / Gift]`, `[Optional 5th if còn ký tự]`
@@ -249,15 +310,15 @@ Cowgirl Mama Western Shirt, Retro Country Mom Tee, Wildflower Sunset Boho Tshirt
 
 **Format output:**
 
-| # | Tag | Chars | Loại | Tần suất TBI | Lý do |
-|---|-----|-------|------|-------------|-------|
-| 1 | retro cowgirl mama | 18 | mảnh LT chính | – | phủ retro + cowgirl + mama |
-| 2 | western mama shirt | 18 | mảnh LT chính | – | phủ western + shirt |
-| 3 | retro cowgirl | 13 | support | 10 | top tần suất, chứa 2 từ LT |
-| ... | ... | ... | ... | ... | ... |
-| 13 | mothers day gift | 16 | gift | 3 | occasion từ TBI |
+| # | Tag | Chars | Loại | Tần suất TBI | EB Vol / Comp | Lý do |
+|---|-----|-------|------|-------------|---------------|-------|
+| 1 | retro cowgirl mama | 18 | mảnh LT chính | – | – | phủ retro + cowgirl + mama |
+| 2 | western mama shirt | 18 | mảnh LT chính | – | 210 / 1,400 | phủ western + shirt |
+| 3 | retro cowgirl | 13 | support | 10 | – | top tần suất, chứa 2 từ LT |
+| ... | ... | ... | ... | ... | ... | ... |
+| 13 | mothers day gift | 16 | gift | 3 | 9,900 / 98,000 | occasion từ TBI |
 
-(TBI = tần suất trên topbubbleindex khi search Long-tail CHÍNH)
+(TBI = tần suất trên topbubbleindex khi search Long-tail CHÍNH; EB = EverBee Volume/tháng / số listing cạnh tranh)
 
 > ⚠️ **Check chars:** Trước khi xuất, đếm ký tự MỖI tag. Tag >20 chars là invalid.
 
@@ -336,8 +397,10 @@ Inline block phải có **đủ các thứ để copy nhanh sang Etsy**:
 - [ ] Đã xem ảnh thật HOẶC đã đọc file report `[[analyze-design]]` (KHÔNG bịa).
 - [ ] Bước 1: đủ 7 trường (Subject, Theme, Persona, Occasion, Emotional hook, Insider keywords, Product fit).
 - [ ] Bước 2: đã gọi ≥3 tool `mcp__trends-ytuong` (research_keyword + find_trending + explore_niche, optional get_keyword_rank), HOẶC ghi rõ caveat skip.
-- [ ] Bước 2: bảng keyword 15-20 candidates có phân loại đầy đủ (primary / niche / long-tail / seasonal).
+- [ ] Bước 2A EverBee (tuỳ chọn): nếu có EverBee MCP → đã gọi `view_keyword` (2-3 seed) + `view_keywords` + `view_listings` top đối thủ + `view_listing_tags` cho 2-3 listing top (sạch IP), mọi `view_*` có `order_direction: "desc"`; không có EverBee → ghi note "không dùng EverBee", cột EB = `–`, 2.5 verify bằng ytrends.
+- [ ] Bước 2: bảng keyword 15-20 candidates có phân loại đầy đủ (primary / niche / long-tail / seasonal), có cột EB Volume / Competition / Score.
 - [ ] Bước 2.4: có 1 Long-tail CHÍNH 5-6 từ (≤6 từ, có product type, không TM) + 2 Long-tail PHỤ.
+- [ ] Bước 2.5: Long-tail CHÍNH đã verify bằng `validate_product_idea` + `view_listings` (ghi band demand/competition + quyết định).
 - [ ] Bước 2B: đã search cả 3 long-tail trên topbubbleindex (hoặc ghi caveat fallback/skip), bảng Support Tags đã qua 4 lớp lọc + dòng "Tag bị loại".
 - [ ] Coverage: mỗi từ gốc của Long-tail CHÍNH có trong ≥2 tag.
 - [ ] Bước 3 Title: ≤140 chars, MỞ ĐẦU bằng Long-tail CHÍNH nguyên văn, phân tách bằng comma, đếm chars chính xác.
@@ -355,6 +418,9 @@ Inline block phải có **đủ các thứ để copy nhanh sang Etsy**:
 - KHÔNG chọn Long-tail CHÍNH quá 6 từ, hoặc không có product type.
 - KHÔNG lấy nguyên top tag topbubbleindex mà không lọc — top thường lẫn `png/svg/sublimation`, TM (`comfort colors`) và tag lệch persona.
 - KHÔNG bịa tần suất topbubbleindex.
+- KHÔNG bịa số EverBee (Volume / Competition / Score / Mo. Sales) — chỉ ghi số tool trả về; trống → `–`.
+- KHÔNG copy nguyên title/tag của listing đối thủ từ EverBee — chỉ học cấu trúc + lọc tag qua 4 lớp.
+- KHÔNG gọi `view_listing_tags` hàng loạt (tốn 13 request/listing) — tối đa 2-3 listing.
 - KHÔNG bịa số liệu keyword volume / competition — nếu tool no data thì ghi "no data, judgement-based".
 - KHÔNG nhồi keyword (keyword stuffing) — Etsy 2025-2026 phạt nặng listing có title spam.
 - KHÔNG viết tag >20 chars hoặc title >140 chars (Etsy hard limit, listing sẽ bị reject).

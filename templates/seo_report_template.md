@@ -30,13 +30,28 @@
 - [ ] `ytrends_find_hidden_gems` — niche: {{...}}
 - [ ] `ytrends_get_keyword_rank` — verify: {{...}}
 
-### Keyword candidates (15-20)
+## Bước 2A — EverBee (tuỳ chọn)
 
-| # | Keyword | Search vol | Competition | Loại | Verdict |
-|---|---------|------------|-------------|------|---------|
-| 1 | {{keyword}} | {{high/medium/low}} | {{high/medium/low}} | {{primary/niche/long-tail/seasonal}} | {{✅ Title + Tag / ✅ Tag only / ❌ Skip}} |
-| 2 | ... | ... | ... | ... | ... |
-| ... | ... | ... | ... | ... | ... |
+> Không có EverBee MCP → ghi `ℹ️ Không dùng EverBee (chưa kết nối)` và xoá phần 2A này; cột EB trong các bảng để `–`.
+
+**Tool đã gọi:**
+- [ ] `view_keyword` — seed: {{...}}
+- [ ] `view_keywords` — keyword_include: {{...}}
+- [ ] `view_listings` — title_include: {{...}}, order_by est_mo_sales
+- [ ] `view_listing_tags` — listing: {{id 1}}, {{id 2}}, {{id 3}}
+
+### Top listing đối thủ (EverBee)
+
+| # | Listing (title rút gọn) | Shop | Giá | Mo. Sales | Conversion | Age (tháng) | Cấu trúc title / ghi chú |
+|---|------------------------|------|-----|-----------|-----------|-------------|--------------------------|
+| 1 | {{...}} | {{...}} | {{$}} | {{n}} | {{%}} | {{n}} | {{frontload cụm gì}} |
+
+### Keyword candidates (15-20, gộp ytrends + EverBee)
+
+| # | Keyword | Search vol (ytrends) | EB Volume | EB Competition | EB Score | Loại | Verdict |
+|---|---------|---------------------|-----------|----------------|----------|------|---------|
+| 1 | {{keyword}} | {{high/medium/low}} | {{n / –}} | {{n / –}} | {{n / –}} | {{primary/niche/long-tail/seasonal}} | {{✅ Title + Tag / ✅ Tag only / ❌ Skip}} |
+| 2 | ... | ... | ... | ... | ... | ... | ... |
 
 ### Phân loại final
 
@@ -54,6 +69,15 @@
 | Phụ 1 | {{...}} | {{...}} | {{...}} | {{...}} |
 | Phụ 2 | {{...}} | {{...}} | {{...}} | {{...}} |
 
+### ✅ Verify Long-tail CHÍNH (2.5 — EverBee nếu có, không thì ytrends)
+
+- (Không EverBee) `ytrends_get_keyword_rank`: volume {{band}} · competition {{band}} · topbubbleindex total {{n}}
+
+- `validate_product_idea`: demand **{{low/medium/high}}** ({{n}} searches/tháng) · competition **{{low/medium/high}}** ({{n}} listings)
+- `view_listings` title chứa long-tail: {{n}} listing, {{n}} đang bán (Mo. Sales > 0)
+- Quyết định: {{✅ Giữ / 🟡 Giữ + thêm modifier / 🔄 Đổi sang ...}}
+- Caveat EverBee: {{meta.caveats}}
+
 ---
 
 ## Bước 2B — Support Tags (topbubbleindex)
@@ -62,9 +86,11 @@
 - Long-tail phụ 1: {{link}} — {{N}} tag
 - Long-tail phụ 2: {{link}} — {{N}} tag
 
-| # | Tag | Chars | Tần suất (chính / phụ1 / phụ2) | Từ long-tail được hỗ trợ | Verdict |
-|---|-----|-------|------------------------------|--------------------------|---------|
-| 1 | {{tag}} | {{X}} | {{n / n / n}} | {{...}} | {{✅ Tag / 🟡 Backup}} |
+- EverBee tag từ listing top: {{id 1}}, {{id 2}}, {{id 3}}
+
+| # | Tag | Chars | Tần suất TBI (chính / phụ1 / phụ2) | EverBee (Vol / Comp / ở listing top?) | Từ long-tail được hỗ trợ | Verdict |
+|---|-----|-------|------------------------------|---------------------------------------|--------------------------|---------|
+| 1 | {{tag}} | {{X}} | {{n / n / n}} | {{n / n / ✅❌}} | {{...}} | {{✅ Tag / 🟡 Backup}} |
 
 **Tag bị loại:** {{tag (L1 TM) · tag (L2 png) · tag (L3 lệch persona) · ...}}
 
@@ -170,4 +196,5 @@ DESCRIPTION:
 
 - {{Any keyword tool no-data caveats}}
 - {{IP/Safety check notes}}
-- {{Cross-check recommendation — eRank/Marmalead before launch}}
+- {{EverBee / ytrends connection caveat nếu có tool không chạy}}
+- {{Cross-check recommendation — eRank/Marmalead before launch nếu thiếu EverBee}}

@@ -143,6 +143,20 @@ Processing time: X–Y business days. Ships from [location].
 4. **Validated từ top competitor (conversion >3%)** → Mirror vào tag nếu fit
 5. **High competition + high volume** → Title nếu là primary keyword của niche; Skip tag nếu cạnh tranh quá cao
 
+### Từ EverBee — đọc số thế nào (chỉ khi có EverBee MCP)
+
+| Tín hiệu EverBee | Quyết định |
+|------------------|-----------|
+| Volume cao + Competition thấp/vừa + Keyword Score cao | → Title + Tag (cả 2) |
+| Volume vừa, Competition thấp | → Long-tail / niche tag (dễ rank) |
+| Volume rất cao + Competition rất cao | → Chỉ dùng nếu là primary của niche; không tốn slot tag |
+| Volume = 0 / không có data | → Ghi `no data`, chỉ giữ nếu là insider keyword quan trọng |
+| Tag xuất hiện ở listing top đối thủ (Mo. Sales cao, listing age thấp) | → Mirror nếu fit design, sau khi lọc 4 lớp |
+| `validate_product_idea` demand low + không listing nào bán | → Đổi Long-tail CHÍNH |
+
+- **ytrends vs EverBee lệch nhau:** EverBee quyết định volume tuyệt đối, ytrends quyết định trend/momentum (dịp sắp tới).
+- **Không copy title/tag đối thủ nguyên văn** — học cấu trúc, rồi viết lại.
+
 ### Khi nào skip một keyword
 - Competition `very high` + không phải primary keyword của niche (ví dụ: "comfort colors shirt" 19138 listings → skip)
 - Không liên quan trực tiếp đến design/niche
@@ -183,7 +197,7 @@ Khi một design ra nhiều product type (T-shirt, Sweatshirt, Mug...):
 
 ## 7. CAVEATS
 
-- **Cross-check bằng eRank / Marmalead** trước khi list chính thức — mcp__trends-ytuong là Etsy-specific nhưng nên double-check volume thật
+- **Volume thật lấy từ EverBee** (Bước 2A, tuỳ chọn) — mcp__trends-ytuong cho trend; không có EverBee thì dùng volume band của ytrends và cross-check bằng eRank / Marmalead trước khi list chính thức
 - Tags có chú thích `no data (judgement-based)` = thêm để đa dạng product-type dimension nhưng chưa có volume confirmed — monitor sau 30 ngày
 - Không dùng brand trademark trong title/tags (Nike, Disney, NFL...) — trademark violation risk
 - Nếu listing có nhiều variant màu sắc: liệt kê colors trong description Block 2, không đưa màu vào title

@@ -48,11 +48,11 @@ green "Report se luu tai: $HOME/Etsy-SEO/reports"
 # 5. MCP
 cyan ">> Buoc 5/5: Ket noi cong cu nghien cuu keyword (MCP)"
 claude mcp remove trends-ytuong >/dev/null 2>&1 || true
-if claude mcp add --scope user --transport sse trends-ytuong https://mcp.trends.ytuong.ai/sse >/dev/null 2>&1; then
+if claude mcp add --scope user --transport http trends-ytuong https://mcp.trends.ytuong.ai/mcp >/dev/null 2>&1; then
   green "Da ket noi tool keyword research (trends-ytuong)"
 else
   warn "Khong tu them duoc MCP. Chay tay:"
-  echo "      claude mcp add --scope user --transport sse trends-ytuong https://mcp.trends.ytuong.ai/sse"
+  echo "      claude mcp add --scope user --transport http trends-ytuong https://mcp.trends.ytuong.ai/mcp"
 fi
 
 echo ""

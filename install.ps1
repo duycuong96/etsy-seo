@@ -83,11 +83,11 @@ try {
     & $claudeCmd mcp remove trends-ytuong 2>&1 | Out-Null
 } catch { }
 try {
-    & $claudeCmd mcp add --scope user --transport sse trends-ytuong https://mcp.trends.ytuong.ai/sse 2>&1 | Out-Null
+    & $claudeCmd mcp add --scope user --transport http trends-ytuong https://mcp.trends.ytuong.ai/mcp 2>&1 | Out-Null
     Write-Ok "Da ket noi tool keyword research (trends-ytuong)"
 } catch {
     Write-Warn "Khong tu them duoc MCP. Sau khi dang nhap claude, chay tay lenh:"
-    Write-Host '      claude mcp add --scope user --transport sse trends-ytuong https://mcp.trends.ytuong.ai/sse' -ForegroundColor Yellow
+    Write-Host '      claude mcp add --scope user --transport http trends-ytuong https://mcp.trends.ytuong.ai/mcp' -ForegroundColor Yellow
 }
 
 # --- Xong ----------------------------------------------------------------

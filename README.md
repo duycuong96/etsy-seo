@@ -107,4 +107,4 @@ etsy-seo/                       ← repo tải từ Git
 | Script báo cài Node.js xong | **Đóng – mở lại** terminal, chạy `install.bat` thêm 1 lần. |
 | Cài Claude Code lỗi quyền | Mở PowerShell bằng **Run as Administrator** rồi chạy lại. |
 | `/etsy-seo` không hiện | Kiểm tra skill đã copy vào `%USERPROFILE%\.claude\skills\etsy-seo`; chạy lại `install.bat`. |
-| Keyword research không có data | Trong `claude` gõ: `claude mcp add --scope user --transport sse trends-ytuong https://mcp.trends.ytuong.ai/sse` |
+| Keyword research không có data / lỗi `410` (cài trước 19/10/2026, endpoint `/sse` cũ đã ngừng) | Chạy lại `install.bat` (Mac: `bash install.sh`), hoặc trong terminal gõ `claude mcp remove trends-ytuong -s user` rồi: `claude mcp add --scope user --transport http trends-ytuong https://mcp.trends.ytuong.ai/mcp` |

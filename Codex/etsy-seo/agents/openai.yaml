@@ -1,0 +1,6 @@
+interface:
+  display_name: "Etsy SEO POD"
+  short_description: "Title + 13 Tags + Description chuẩn SEO Etsy cho design POD"
+  default_prompt: "Viết SEO Etsy cho design này"
+policy:
+  allow_implicit_invocation: true

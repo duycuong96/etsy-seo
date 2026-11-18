@@ -1,0 +1,297 @@
+<title>Etsy SEO trên Codex</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: một cột đọc ~70ch, các bước nối bằng đường ray số thứ tự bên trái; khối lệnh kiểu terminal, có tab Windows / Mac */
+:root{
+  --bg:#f5f6f8; --surface:#ffffff; --ink:#18212d; --muted:#5b6676; --line:#dfe3ea;
+  --accent:#d9521c; --accent-soft:#fbe9e1; --term:#16202b; --term-ink:#e6edf5; --ok:#1f7a4d; --ok-soft:#e3f3ea; --warn:#9a6200; --warn-soft:#fbf1dc;
+  --f-body:"Be Vietnam Pro",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,Consolas,"Courier New",monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#11161d; --surface:#18202a; --ink:#e7ecf2; --muted:#9aa6b5; --line:#2a3542;
+  --accent:#f0773f; --accent-soft:#3a2219; --term:#0b0f14; --term-ink:#dfe7f0; --ok:#5cc690; --ok-soft:#173226; --warn:#e5b04d; --warn-soft:#3a2d12; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#11161d; --surface:#18202a; --ink:#e7ecf2; --muted:#9aa6b5; --line:#2a3542;
+  --accent:#f0773f; --accent-soft:#3a2219; --term:#0b0f14; --term-ink:#dfe7f0; --ok:#5cc690; --ok-soft:#173226; --warn:#e5b04d; --warn-soft:#3a2d12; color-scheme:dark}
+
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.65}
+.wrap{max-width:780px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:40px 72px}
+h1,h2,h3{text-wrap:balance;line-height:1.25;margin:0}
+h1{font-size:clamp(28px,5vw,40px);font-weight:700;letter-spacing:-.01em}
+h2{font-size:22px;font-weight:700}
+h3{font-size:17px;font-weight:600}
+p{margin:0}
+a{color:var(--accent)}
+code{font-family:var(--f-mono);font-size:.88em;background:var(--accent-soft);padding:.1em .35em;border-radius:4px;overflow-wrap:anywhere}
+.eyebrow{font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
+.lead{color:var(--muted);font-size:17px;max-width:62ch}
+header{display:grid;gap:14px;padding-bottom:28px;border-bottom:1px solid var(--line)}
+
+/* spec strip: giới hạn thật của Etsy */
+.spec{display:flex;flex-wrap:wrap;gap:10px;margin-top:6px}
+.spec span{font-family:var(--f-mono);font-size:13px;border:1px solid var(--line);background:var(--surface);padding:6px 10px;border-radius:6px;font-variant-numeric:tabular-nums}
+.spec b{color:var(--accent);font-weight:600}
+
+section{display:grid;gap:16px;padding-top:36px}
+.box{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px 20px;display:grid;gap:10px}
+.checklist{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.checklist li{display:grid;grid-template-columns:22px 1fr;gap:10px;align-items:start}
+.checklist li::before{content:"";width:16px;height:16px;margin-top:5px;border:2px solid var(--accent);border-radius:4px}
+
+/* OS switch */
+.os{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--surface);width:max-content}
+.os button{font:600 14px var(--f-body);padding:8px 16px;border:0;background:transparent;color:var(--muted);cursor:pointer}
+.os button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.os button:focus-visible,.copy:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* steps rail */
+.steps{list-style:none;margin:0;padding:0;display:grid;gap:0}
+.step{display:grid;grid-template-columns:40px minmax(0,1fr);gap:16px;position:relative;padding-bottom:30px}
+.step::before{content:"";position:absolute;left:19px;top:40px;bottom:0;width:2px;background:var(--line)}
+.step:last-child::before{display:none}
+.num{width:40px;height:40px;border-radius:50%;background:var(--accent);color:#fff;display:grid;place-items:center;font-weight:700;font-variant-numeric:tabular-nums}
+.body{display:grid;gap:10px;min-width:0;padding-top:6px}
+.body ol,.body ul{margin:0;padding-left:20px;display:grid;gap:6px}
+.muted{color:var(--muted);font-size:15px}
+
+/* terminal */
+.term{background:var(--term);color:var(--term-ink);border-radius:8px;position:relative;min-width:0}
+.term pre{margin:0;padding:14px 16px;padding-right:76px;font:14px/1.6 var(--f-mono);overflow-x:auto;white-space:pre}
+.term .lbl{display:block;font:600 11px var(--f-body);letter-spacing:.08em;text-transform:uppercase;color:var(--term-ink);opacity:.6;padding:10px 16px 0}
+.copy{position:absolute;top:8px;right:8px;font:600 12px var(--f-body);padding:6px 10px;border-radius:6px;border:1px solid rgba(255,255,255,.25);background:transparent;color:var(--term-ink);cursor:pointer}
+
+.note{border-radius:8px;padding:12px 14px;font-size:15px;display:grid;gap:4px}
+.note.ok{background:var(--ok-soft);color:var(--ink);border-left:3px solid var(--ok)}
+.note.warn{background:var(--warn-soft);color:var(--ink);border-left:3px solid var(--warn)}
+.note strong{font-weight:600}
+
+/* sample result */
+.result{display:grid;gap:12px}
+.result .row{display:grid;gap:4px}
+.result .k{font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.result .v{font-size:15px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chips span{font-size:13px;border:1px solid var(--line);border-radius:999px;padding:3px 10px;background:var(--bg)}
+.chips span i{font-style:normal;font-family:var(--f-mono);color:var(--muted);font-size:11px;margin-left:6px}
+
+/* tables */
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:15px;min-width:560px}
+th,td{text-align:left;vertical-align:top;padding:11px 14px;border-bottom:1px solid var(--line)}
+th{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600}
+tr:last-child td{border-bottom:0}
+td:first-child{font-weight:600;width:36%}
+
+.prompts{display:grid;gap:8px}
+footer{padding-top:40px;color:var(--muted);font-size:14px;border-top:1px solid var(--line);margin-top:40px}
+[data-os="mac"] .win-only,[data-os="win"] .mac-only{display:none}
+@media (max-width:480px){.step{grid-template-columns:32px minmax(0,1fr);gap:12px}.num{width:32px;height:32px;font-size:14px}.step::before{left:15px;top:32px}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="wrap" id="root" data-os="win">
+<header>
+  <span class="eyebrow">Tài liệu cài đặt · dành cho người mới</span>
+  <h1>Etsy SEO trên Codex</h1>
+  <p class="lead">Cài skill <code>etsy-seo</code> vào Codex trên máy Windows hoặc Mac. Cài xong, bạn chỉ cần kéo ảnh design vào là nhận được Title, 13 Tags và Description chuẩn SEO Etsy. Làm lần đầu mất khoảng 15 phút.</p>
+  <div class="spec" aria-label="Giới hạn Etsy mà skill tự kiểm tra">
+    <span>Title <b>≤140</b> ký tự</span>
+    <span><b>13</b> tags × <b>≤20</b> ký tự</span>
+    <span>Description: <b>160</b> ký tự đầu</span>
+    <span>Long-tail chính <b>5–6</b> từ</span>
+  </div>
+</header>
+
+<section aria-labelledby="prep">
+  <h2 id="prep">Chuẩn bị trước</h2>
+  <div class="box">
+    <ul class="checklist">
+      <li><span>Tài khoản <strong>ChatGPT Plus</strong> (hoặc Team / Pro) đang hoạt động.</span></li>
+      <li><span>File <code>Etsy-SEO-Codex.zip</code> do quản lý gửi (qua Drive, Zalo hoặc USB).</span></li>
+      <li><span>Trong ChatGPT đã kết nối 2 công cụ <strong>ytrends</strong> và <strong>EverBee</strong>. Chưa có thì nhờ quản lý thêm giúp.</span></li>
+      <li><span>Máy có Internet và bạn có quyền cài phần mềm.</span></li>
+    </ul>
+  </div>
+</section>
+
+<section aria-labelledby="install">
+  <h2 id="install">Các bước cài đặt</h2>
+  <div class="os" role="group" aria-label="Chọn hệ điều hành">
+    <button type="button" id="os-win" aria-pressed="true" data-set="win">Windows</button>
+    <button type="button" id="os-mac" aria-pressed="false" data-set="mac">Mac</button>
+  </div>
+
+  <ol class="steps">
+    <li class="step">
+      <span class="num">1</span>
+      <div class="body">
+        <h3>Cài Codex và đăng nhập</h3>
+        <ol>
+          <li>Tải app <strong>ChatGPT</strong> cho <span class="win-only">Windows (Microsoft Store hoặc chatgpt.com/download)</span><span class="mac-only">Mac (chatgpt.com/download)</span> rồi cài đặt.</li>
+          <li>Mở app → đăng nhập tài khoản ChatGPT → chọn mục <strong>Codex</strong>.</li>
+          <li>Mở Codex <strong>một lần</strong> rồi đóng lại. Bước này để Codex tạo thư mục cài đặt riêng của nó trên máy.</li>
+        </ol>
+        <p class="muted">Ai quen dòng lệnh có thể dùng Codex CLI: cài Node.js rồi chạy <code>npm install -g @openai/codex</code>.</p>
+      </div>
+    </li>
+
+    <li class="step">
+      <span class="num">2</span>
+      <div class="body">
+        <h3>Lấy 2 đường link MCP</h3>
+        <p>Codex không dùng chung kết nối với ChatGPT, nên cần chép 2 đường link này sang cho Codex.</p>
+        <ol>
+          <li>Trong ChatGPT mở <strong>Settings → Apps &amp; Connectors</strong>.</li>
+          <li>Bấm vào <strong>ytrends</strong> → copy dòng <strong>MCP Server URL</strong> → dán tạm vào Notepad<span class="mac-only"> / Notes</span>.</li>
+          <li>Làm tương tự với <strong>EverBee</strong>.</li>
+        </ol>
+        <div class="note warn"><strong>Link ytrends đúng: <code>https://mcp.trends.ytuong.ai/mcp</code></strong>. Đừng dùng link cũ <code>…/sse</code>, link này đã ngừng chạy (lỗi 410).</div>
+      </div>
+    </li>
+
+    <li class="step">
+      <span class="num">3</span>
+      <div class="body">
+        <h3>Giải nén gói cài</h3>
+        <p class="win-only">Chuột phải vào <code>Etsy-SEO-Codex.zip</code> → <strong>Extract All…</strong> → <strong>Extract</strong>. Bạn sẽ có thư mục <code>Etsy-SEO-Codex</code>. Đừng chạy file ngay bên trong zip.</p>
+        <p class="mac-only">Bấm đúp <code>Etsy-SEO-Codex.zip</code> trong Downloads. Mac sẽ tự tạo thư mục <code>Etsy-SEO-Codex</code>.</p>
+        <p class="muted">Trong thư mục có: <code>etsy-seo</code> (skill), <code>install-codex.bat</code> / <code>.ps1</code> (Windows), <code>install-codex.sh</code> (Mac) và tài liệu này.</p>
+      </div>
+    </li>
+
+    <li class="step">
+      <span class="num">4</span>
+      <div class="body">
+        <h3>Chạy file cài đặt</h3>
+        <div class="win-only body" style="padding:0">
+          <ol>
+            <li>Mở thư mục <code>Etsy-SEO-Codex</code> → bấm đúp <strong>install-codex.bat</strong>.</li>
+            <li>Nếu hiện màn hình xanh <em>“Windows protected your PC”</em>: bấm <strong>More info</strong> → <strong>Run anyway</strong>.</li>
+            <li>Cửa sổ đen hỏi <em>URL MCP ytrends</em>: dán link ở bước 2 (chuột phải để dán) → Enter. Làm tương tự với EverBee.</li>
+            <li>Thấy dòng <strong>HOAN TAT!</strong> → bấm Enter để đóng.</li>
+          </ol>
+        </div>
+        <div class="mac-only body" style="padding:0">
+          <ol>
+            <li>Mở <strong>Terminal</strong> (nhấn Cmd + Space, gõ “Terminal”, Enter).</li>
+            <li>Dán lệnh dưới đây rồi Enter:</li>
+          </ol>
+          <div class="term"><span class="lbl">Terminal</span><pre id="cmd-mac">cd ~/Downloads/Etsy-SEO-Codex &amp;&amp; bash install-codex.sh</pre><button class="copy" type="button" data-copy="cmd-mac">Copy</button></div>
+          <ol start="3">
+            <li>Khi được hỏi <em>URL MCP ytrends</em>: dán link (Cmd + V) → Enter. Làm tương tự với EverBee.</li>
+            <li>Thấy dòng <strong>HOAN TAT!</strong> là xong.</li>
+          </ol>
+        </div>
+        <div class="note ok"><strong>Chưa có link MCP?</strong> Cứ bấm Enter để bỏ qua. Lấy được link thì chạy lại file cài, skill và cấu hình cũ không bị mất.</div>
+      </div>
+    </li>
+
+    <li class="step">
+      <span class="num">5</span>
+      <div class="body">
+        <h3>Mở lại Codex và kiểm tra</h3>
+        <ol>
+          <li>Thoát <strong>hẳn</strong> app ChatGPT/Codex<span class="win-only"> (cả biểu tượng dưới khay đồng hồ)</span><span class="mac-only"> (Cmd + Q)</span> rồi mở lại.</li>
+          <li>Trong ô chat của Codex gõ <code>/skills</code> → phải thấy <strong>Etsy SEO POD</strong> (etsy-seo).</li>
+          <li>Gõ <code>/mcp</code> → phải thấy <strong>ytrends</strong> và <strong>everbee</strong>. Lần đầu có thể hiện cửa sổ đăng nhập, bạn tự đăng nhập tài khoản của mình.</li>
+        </ol>
+      </div>
+    </li>
+
+    <li class="step">
+      <span class="num">6</span>
+      <div class="body">
+        <h3>Chạy thử lần đầu</h3>
+        <p>Kéo 1 ảnh design vào ô chat Codex rồi gõ:</p>
+        <div class="term"><span class="lbl">Codex</span><pre id="cmd-first">$etsy-seo viết SEO Etsy cho design này, product type: t-shirt</pre><button class="copy" type="button" data-copy="cmd-first">Copy</button></div>
+        <p>Codex sẽ tự chạy 4 bước: đọc design → tra keyword bằng ytrends + EverBee → lọc tag → viết listing. Cuối cùng bạn nhận được một khối để copy thẳng sang Etsy, ví dụ:</p>
+        <div class="box result" aria-label="Kết quả mẫu">
+          <div class="row"><span class="k">Long-tail chính · 5 từ</span><span class="v"><code>retro cowgirl mama western shirt</code></span></div>
+          <div class="row"><span class="k">Title · 125/140</span><span class="v">Cowgirl Mama Western Shirt, Retro Country Mom Tee, Wildflower Sunset Boho Tshirt, Mothers Day Cowgirl Gift, Rural Mom Apparel</span></div>
+          <div class="row"><span class="k">13 Tags · mỗi tag ≤20</span>
+            <div class="chips">
+              <span>cowgirl mom shirt<i>17</i></span><span>western mama tee<i>16</i></span><span>wildflower mom tee<i>18</i></span><span>mothers day cowgirl<i>19</i></span><span>rural mom apparel<i>17</i></span><span>boho mama shirt<i>15</i></span><span>sunset cowgirl tee<i>18</i></span><span>country mom gift<i>16</i></span><span>…</span>
+            </div>
+          </div>
+        </div>
+        <p class="muted">Đây là ví dụ minh hoạ. Kết quả thật phụ thuộc design và số liệu keyword hôm đó. Report đầy đủ được lưu tại <span class="win-only"><code>C:\Users\&lt;tên-bạn&gt;\Etsy-SEO\reports\</code></span><span class="mac-only"><code>~/Etsy-SEO/reports/</code></span>.</p>
+      </div>
+    </li>
+  </ol>
+</section>
+
+<section aria-labelledby="daily">
+  <h2 id="daily">Dùng hằng ngày</h2>
+  <p>Luôn bắt đầu tin nhắn bằng <code>$etsy-seo</code> và kèm ảnh design. Vài câu lệnh mẫu:</p>
+  <div class="prompts">
+    <div class="term"><pre id="p1">$etsy-seo viết SEO cho design này, product type: sweatshirt</pre><button class="copy" type="button" data-copy="p1">Copy</button></div>
+    <div class="term"><pre id="p2">$etsy-seo chỉ cần 13 tags cho design này</pre><button class="copy" type="button" data-copy="p2">Copy</button></div>
+    <div class="term"><pre id="p3">$etsy-seo viết SEO cho design này, niche: bird watching, gift cho dad</pre><button class="copy" type="button" data-copy="p3">Copy</button></div>
+  </div>
+  <div class="box">
+    <h3>Trước khi dán lên Etsy, tự soát 4 điểm</h3>
+    <ul class="checklist">
+      <li><span>Title bắt đầu bằng đúng long-tail chính.</span></li>
+      <li><span>Đủ 13 tag, không tag nào bị Etsy báo quá dài.</span></li>
+      <li><span>Không có tên thương hiệu, nhân vật hay đội thể thao (Disney, NFL, Comfort Colors…). Skill sẽ cảnh báo 🔴 nếu design có rủi ro.</span></li>
+      <li><span>Bảng keyword có số thật. Nếu toàn ghi <code>no data</code> thì MCP chưa kết nối, xem mục bên dưới.</span></li>
+    </ul>
+  </div>
+</section>
+
+<section aria-labelledby="fix">
+  <h2 id="fix">Gặp lỗi thì xử lý thế nào</h2>
+  <div class="tbl">
+    <table>
+      <thead><tr><th>Hiện tượng</th><th>Cách xử lý</th></tr></thead>
+      <tbody>
+        <tr><td>Bấm đúp file .bat, cửa sổ hiện rồi tắt ngay</td><td>Bạn đang chạy file bên trong zip. Giải nén ra trước (bước 3) rồi chạy lại.</td></tr>
+        <tr><td>“Windows protected your PC”</td><td>Bấm <strong>More info → Run anyway</strong>. File chỉ chép skill vào máy bạn, không cài gì khác.</td></tr>
+        <tr><td><code>/skills</code> không thấy etsy-seo</td><td>Thoát hẳn Codex rồi mở lại. Vẫn không có thì chạy lại file cài và xem dòng <em>Skill cai tai:</em> có báo OK không.</td></tr>
+        <tr><td><code>/mcp</code> không thấy ytrends / everbee</td><td>Lúc cài bạn đã bỏ qua link MCP. Chạy lại file cài và dán link.</td></tr>
+        <tr><td>MCP báo lỗi 401, 404 hoặc 410</td><td>Link sai hoặc đã cũ. Lấy lại link trong ChatGPT (bước 2), rồi nhờ quản lý sửa trong file <code>.codex\config.toml</code>.</td></tr>
+        <tr><td>Bảng keyword toàn <code>no data</code></td><td>MCP chưa chạy. Kết quả vẫn dùng được nhưng chỉ dựa trên đánh giá, nên kiểm tra lại trên EverBee trước khi đăng.</td></tr>
+        <tr><td>Etsy báo tag quá dài</td><td>Nhắn Codex: <em>“tag số X quá 20 ký tự, thay tag khác”</em>.</td></tr>
+        <tr class="win-only"><td>Dùng Codex trong cửa sổ Ubuntu (WSL)</td><td>Không dùng file .bat. Mở cửa sổ Ubuntu rồi chạy <code>cd /mnt/c/Users/&lt;tên&gt;/Downloads/Etsy-SEO-Codex &amp;&amp; bash install-codex.sh</code>.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section aria-labelledby="update">
+  <h2 id="update">Cập nhật hoặc gỡ skill</h2>
+  <div class="box">
+    <p><strong>Cập nhật:</strong> nhận gói zip mới → giải nén → chạy lại file cài. Bản cũ được chuyển sang thư mục <code>.agents\skills-backup</code>, không bị xoá.</p>
+    <p><strong>Gỡ:</strong> xoá thư mục <span class="win-only"><code>C:\Users\&lt;tên-bạn&gt;\.agents\skills\etsy-seo</code></span><span class="mac-only"><code>~/.agents/skills/etsy-seo</code></span> rồi mở lại Codex.</p>
+    <p class="muted">Thư mục bắt đầu bằng dấu chấm bị ẩn. Trên Windows bật <em>View → Show → Hidden items</em>. Trên Mac nhấn Cmd + Shift + . trong Finder.</p>
+  </div>
+</section>
+
+<footer>Skill etsy-seo · bản Codex · cập nhật 10/2026. Có thắc mắc thì hỏi quản lý team kèm ảnh chụp màn hình lỗi.</footer>
+</div>
+
+<script>
+(function(){
+  var root=document.getElementById('root');
+  function setOS(os){
+    root.setAttribute('data-os',os);
+    document.querySelectorAll('.os button').forEach(function(b){b.setAttribute('aria-pressed',String(b.dataset.set===os))});
+    try{localStorage.setItem('etsyseo-os',os)}catch(e){}
+  }
+  var saved=null;try{saved=localStorage.getItem('etsyseo-os')}catch(e){}
+  if(!saved && /Mac/i.test(navigator.platform||'')) saved='mac';
+  if(saved) setOS(saved);
+  document.querySelectorAll('.os button').forEach(function(b){b.addEventListener('click',function(){setOS(b.dataset.set)})});
+  document.querySelectorAll('.copy').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var el=document.getElementById(btn.dataset.copy), txt=el.textContent;
+      function done(){btn.textContent='Đã copy';setTimeout(function(){btn.textContent='Copy'},1500)}
+      function fallback(){var r=document.createRange();r.selectNodeContents(el);var s=getSelection();s.removeAllRanges();s.addRange(r);btn.textContent='Nhấn Ctrl+C'}
+      if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).then(done,fallback)}else{fallback()}
+    });
+  });
+})();
+</script>

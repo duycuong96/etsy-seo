@@ -8,6 +8,13 @@ metadata:
 
 # Etsy SEO — Pipeline 4 bước
 
+> 📁 **Super CEO — nơi lưu output (ưu tiên hơn path mặc định bên dưới)**
+> Nếu đang làm việc trong `~/Downloads/Super CEO/` (cwd hoặc user nhắc pipeline/khu) → lưu theo bảng này, KHÔNG lưu path cũ:
+> - Chạy trong pipeline → `~/Downloads/Super CEO/10-POD-ETSY/pipeline/04_seo/output/YYYY-MM-DD_<slug>.md` (dòng 1: `Trạng thái: ⏳ chờ duyệt`, làm thêm mục Verify trong `04_seo/CONTEXT.md`).
+> - Chạy lẻ → `~/Downloads/Super CEO/10-POD-ETSY/reports/YYYY-MM-DD_seo_<slug>.md`.
+> Ngoài Super CEO → giữ path mặc định của skill.
+
+
 Skill viết **Title + 13 Tags + Description** chuẩn SEO Etsy cho design POD (t-shirt, hoodie, sticker, poster, mug, tote). Pipeline yêu cầu **nghiên cứu design trước**, sau đó **research keyword bằng tool data thật**, mới viết SEO.
 
 > ⚠️ **Đầu vào bắt buộc:** Một trong hai:
